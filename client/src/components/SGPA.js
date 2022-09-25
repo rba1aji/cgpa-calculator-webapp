@@ -87,10 +87,10 @@ export default function SGPA() {
                     <tbody>
                         {noOfCourses.map((item, index) => {
                             return <tr key={index}>
-                                <td style={{ width: '30%' }} className='my-auto py-auto'>course {index + 1}</td>
-                                <td style={{ width: '25%' }}>
+                                <td style={{ width: '22.5%' }} className='my-auto py-auto'>course {index + 1}</td>
+                                <td style={{ width: '27.5%' }}>
                                     <Form.Control required
-                                        className='text-center mx-4 bg-secondary p-1'
+                                        className={`text-center ${window.innerWidth > 600 ? 'mx-4' : ''} bg-secondary p-1`}
                                         style={{ width: '70%', color: 'white', fontSize: '120%', fontWeight: 'bolder' }}
                                         type="number" min='0'
                                         onChange={
@@ -101,11 +101,11 @@ export default function SGPA() {
                                     >
                                     </Form.Control>
                                 </td>
-                                <td style={{ width: '25%' }}>
+                                <td style={{ width: '27.5%' }}>
                                     <Form.Select
                                         required
                                         style={{ width: '70%', color: 'white', fontSize: '120%', fontWeight: 'bolder' }}
-                                        className='text-center mx-4 bg-secondary p-1'
+                                        className={`text-center ${window.innerWidth > 600 ? 'mx-4' : ''} bg-secondary p-1`}
                                         onChange={
                                             (e) => {
                                                 // console.log(e.target.value);
@@ -129,7 +129,7 @@ export default function SGPA() {
                                             })
                                         }
                                     </Form.Select></td>
-                                <td style={{ width: '30%' }}>{passOrFail(selectedGrade[index])}</td>
+                                <td style={{ width: '22.5%' }}>{passOrFail(selectedGrade[index])}</td>
                             </tr>
                         }, [selectedGrade])
                         }
@@ -162,12 +162,12 @@ export default function SGPA() {
                 <Button type="submit" variant='info' className='px-5'><h5 className='mb-0'>Find my SGPA</h5></Button>
             </Form>
             <div className='' style={{ marginTop: '35vh', marginBottom: '40vh' }}>
-                {sgpa != null ? <><span className='h4'>Your SGPA is </span><span className='h3' style={{color:'green'}}>{sgpa}</span>
+                {sgpa != null ? <><span className='h4'>Your SGPA is </span><span className='h3' style={{ color: 'green' }}>{sgpa}</span>
                 </> : <></>
                 }
-                <br/>
+                <br />
             </div>
-            <div ref={myRef} id='myRef'><br/></div>
+            <div ref={myRef} id='myRef'><br /></div>
         </>
     );
 }
