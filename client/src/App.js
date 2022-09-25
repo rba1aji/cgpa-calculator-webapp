@@ -13,10 +13,10 @@ function App() {
       <Button onClick={() => setType("sgpa")}>Just SGPA</Button>
 
       {
-        type == "sgpa" ? <SGPA /> : <></>
+        type === "sgpa" ? <SGPA /> : <></>
       }
       {
-        type == "cgpa" ? <div></div> : <></>
+        type === "cgpa" ? <div></div> : <></>
       }
 
     </div>
