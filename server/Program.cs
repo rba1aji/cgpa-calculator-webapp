@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
             //   policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 
             policy
-                .WithOrigins("https://localhost:3000", "https://cgpacalc.vercel.app")
+                .WithOrigins("http://localhost:3000", "https://cgpacalc.vercel.app")
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         }
