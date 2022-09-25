@@ -18,7 +18,7 @@ namespace server.Controllers
         }
 
         [HttpPost("{noOfSem}")]
-        public ActionResult<Output> FindCGPA(int noOfSem, [FromBody] List<Input> input)
+        public ActionResult<Output> FindCGPA(int noOfSem, [FromBody] Input[] input)
         {
             Output output = new Output();
             if (noOfSem < 1)
@@ -27,7 +27,7 @@ namespace server.Controllers
             }
             for (int i = 0; i < noOfSem; i++)
             {
-                MarkSheet marksheet = new MarkSheet(input.ElementAt(i));
+                MarkSheet marksheet = new MarkSheet(input[i]);
                 marksheet.gradesToPoints();
                 marksheet.calculate();
                 output.Sgpa?.Add(marksheet.Sgpa);

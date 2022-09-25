@@ -1,8 +1,25 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  background-color: azure;
 }
 
-th,td{
-  border: 1px solid black;
+thead,td ,th{
+  border-radius: 50%;
+  border: 1px solid aquamarine;
+  /* background-color: aquamarine; */
+}
+
+thead,
+tr {
+  margin-top: 20px;
+  /* border: 20px solid whitesmoke; */
   /* width: 25%; */
+}
+
+Table {
+
+  /* background-color: aquamarine; */
+  /* /* border: 2px dotted black ; */
+  border-radius: 50%;
 }

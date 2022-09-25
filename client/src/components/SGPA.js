@@ -1,53 +1,95 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Table, Button } from "react-bootstrap";
+import axios from 'axios';
 // import { DropdownButton, ButtonGroup, Dropdown } from "react-bootstrap";
 
-const passOrFail = () => {
-    return "Pass";
+const passOrFail = (grade) => {
+    var pass = 'OA+B+';
+    if (pass.includes(grade)) return "Pass"
+    return "pass/fail";
 }
 
 
 export default function SGPA() {
     const [noOfCourses, setNoOfCourses] = useState([0, 1, 2, 3, 4]);
     const [selectedGrade, setSelectedGrade] = useState([]);
-    // const [courseRows, setCourseRows] = useState([]);
+    const [credits, setCredits] = useState([]);
     const gradesAsAlphabet = [
-        'O', 'A+', 'A', 'B+', 'B', 'RA', 'W', 'AB', 'I'
+        'AB', 'O', 'A+', 'A', 'B+', 'B', 'RA', 'W', 'I'
     ];
-
 
     return (
         <>
-            <h2>Enter a semester details</h2>
-            <Form style={{ display: 'inline-block' }}>
-                <Table>
+            <br />
+            <h4 className='mb-0'>Enter a semester details</h4>
+            <br />
+            <Form style={{ display: 'inline-block' }}
+                onSubmit={((e) => {
+                    let grades = new Array(noOfCourses.length);
+                    grades.fill('I');
+                    for (let i = 0; i < selectedGrade.length; i++) {
+                        grades[i] = selectedGrade[i] === '' ? grades[i] : selectedGrade[i];
+                    }
+                    e.preventDefault();
+                    console.log(credits, grades);
+
+                    axios({
+                        method: 'post',
+                        url: 'https://rjicgpacalc.herokuapp.com/api/CGPA/1',
+                        data:
+                            [
+                                {
+                                    "credits": credits,
+                                    "gradesInAlphabet": grades,
+                                    "noOfCourses": noOfCourses
+                                }
+                            ]
+
+                    })
+                        .then(() => {
+
+                        })
+                        .catch(() => {
+
+                        })
+
+                })}
+            >
+                <Table  >
                     <thead>
-                        <th>Course Title</th>
-                        <th>Credits</th>
-                        <th>Grade</th>
-                        <th>Result</th>
+                        <th className="p-2">Course Title</th>
+                        <th className='p-2'>Credits</th>
+                        <th className='p-2'>Grade</th>
+                        <th className="p-2">Result</th>
                     </thead>
 
                     <tbody>
                         {noOfCourses.map((item, index) => {
-                            return <tr>
-                                <td style={{ width: '30%' }}>course {index + 1}</td>
+                            return <tr key={index}>
+                                <td style={{ width: '30%' }} className='my-auto py-auto'>course {index + 1}</td>
                                 <td style={{ width: '25%' }}>
                                     <Form.Control required
                                         className='text-center mx-4 bg-secondary p-1'
                                         style={{ width: '70%', color: 'white', fontSize: '120%', fontWeight: 'bolder' }}
-                                        type="number" min='0'>
+                                        type="number" min='0'
+                                        onChange={
+                                            (e) => {
+                                                credits[index] = e.target.value;
+                                            }
+                                        }
+                                    >
                                     </Form.Control>
                                 </td>
                                 <td style={{ width: '25%' }}>
                                     <Form.Select
+                                        required
                                         style={{ width: '70%', color: 'white', fontSize: '120%', fontWeight: 'bolder' }}
                                         className='text-center mx-4 bg-secondary p-1'
-                                        onSelect={
-                                            () => {
-                                                console.log(selectedGrade);
-                                                console.log('selected')
+                                        onChange={
+                                            (e) => {
+                                                // console.log(e.target.value);
+                                                // console.log('selected')
                                             }}
                                     >
                                         {selectedGrade.map((grade, ind) => {
@@ -56,25 +98,24 @@ export default function SGPA() {
                                         {
                                             gradesAsAlphabet.map((item, ind) => {
                                                 return <option
+                                                    key={ind}
                                                     onClick={() => {
                                                         let t = selectedGrade;
                                                         t[index] = item;
                                                         setSelectedGrade(t)
-                                                        console.log(selectedGrade)
                                                     }}>
                                                     {item}
                                                 </option>
                                             })
                                         }
                                     </Form.Select></td>
-                                <td style={{ width: '30%' }}>{passOrFail()}</td>
+                                <td style={{ width: '30%' }}>{passOrFail(selectedGrade[index])}</td>
                             </tr>
                         }, [selectedGrade])
                         }
                     </tbody>
-
-                    <tr >
-                        <td colSpan={2} style={{ border: 'none' }}>
+                    <tfoot style={{ border: 'none' }} >
+                        <td colSpan={2} style={{ border: 'none' }} className='pt-3'>
                             <Button
                                 onClick={() => {
                                     var t = noOfCourses;
@@ -87,7 +128,7 @@ export default function SGPA() {
                                 - Remove a course
                             </Button>
                         </td>
-                        <td colSpan={2} style={{ border: 'none' }}>
+                        <td colSpan={2} style={{ border: 'none' }} className='pt-3'>
                             <Button
                                 onClick={() => setNoOfCourses((old) => [...old, old.length])}
                                 variant="success" style={{ backgroundColor: "green" }}
@@ -95,10 +136,10 @@ export default function SGPA() {
                                 + Add a course
                             </Button>
                         </td>
-                    </tr>
+                    </tfoot>
 
                 </Table>
-                <Button type="submit">Find my SGPA</Button>
+                <Button type="submit" variant='info' className='px-5'><h5 className='mb-0'>Find my SGPA</h5></Button>
             </Form>
         </>
     );

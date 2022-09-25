@@ -7,11 +7,11 @@ function App() {
   const [type, setType] = useState();
   return (
     <div className="App">
-      What to calculate?
-      <Button className='' onClick={() => setType("cgpa")}>CGPA</Button>
-      or
-      <Button onClick={() => setType("sgpa")}>Just SGPA</Button>
-
+      {'What to calculate?  '}
+      <Button className='' variant='info' onClick={() => setType("cgpa")}>{'CGPA'}</Button>
+      {' or  '}
+      <Button variant='info' onClick={() => setType("sgpa")}>{'Just SGPA'}</Button>
+      <br />
       {
         type === "sgpa" ? <SGPA /> : <></>
       }
