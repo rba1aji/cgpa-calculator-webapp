@@ -6,7 +6,7 @@ import SGPA from './components/SGPA';
 function App() {
   const [type, setType] = useState();
   return (
-    <div className="App">
+    <div className="App" style={{paddingTop:type?'0':'40vh'}}>
       {'What to calculate?  '}
       <Button className='' variant='info' onClick={() => setType("cgpa")}>{'CGPA'}</Button>
       {' or  '}

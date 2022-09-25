@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Form } from "react-bootstrap";
 import { Table, Button } from "react-bootstrap";
 import axios from 'axios';
@@ -18,6 +18,20 @@ export default function SGPA() {
     const gradesAsAlphabet = [
         'AB', 'O', 'A+', 'A', 'B+', 'B', 'RA', 'W', 'I'
     ];
+    const [sgpa, setSgpa] = useState()
+    const myRef = useRef();
+
+    const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
+
+    // useEffect(() => {
+    //     axios.get("https://localhost:7213/api/CGPA")
+    //         .then((res) => {
+    //             console.log(res)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err.message);
+    //         })
+    // }, [noOfCourses])
 
     return (
         <>
@@ -34,24 +48,30 @@ export default function SGPA() {
                     e.preventDefault();
                     console.log(credits, grades);
 
+                    const arrdata = [
+                        {
+                            "credits": credits,
+                            "gradesInAlphabet": grades,
+                            "noOfCourses": noOfCourses.length
+                        }
+                    ];
+
                     axios({
                         method: 'post',
-                        url: 'https://rjicgpacalc.herokuapp.com/api/CGPA/1',
-                        data:
-                            [
-                                {
-                                    "credits": credits,
-                                    "gradesInAlphabet": grades,
-                                    "noOfCourses": noOfCourses
-                                }
-                            ]
+                        url: `https://localhost:7213/api/CGPA/1`,
+                        data: arrdata,
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8 "
+                        }
 
                     })
                         .then((res) => {
-                            console.log(res);
+                            console.log(res.data);
+                            setSgpa(res.data.cgpa.toFixed(2));
+                            scrollToRef(myRef);
                         })
                         .catch((err) => {
-                            console.log(err);
+                            console.log(err.message);
                         })
 
                 })}
@@ -141,6 +161,13 @@ export default function SGPA() {
                 </Table>
                 <Button type="submit" variant='info' className='px-5'><h5 className='mb-0'>Find my SGPA</h5></Button>
             </Form>
+            <div className='' style={{ marginTop: '35vh', marginBottom: '40vh' }}>
+                {sgpa != null ? <><span className='h4'>Your SGPA is </span><span className='h3' style={{color:'green'}}>{sgpa}</span>
+                </> : <></>
+                }
+                <br/>
+            </div>
+            <div ref={myRef} id='myRef'><br/></div>
         </>
     );
 }

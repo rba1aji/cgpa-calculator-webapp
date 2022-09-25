@@ -52,12 +52,12 @@ namespace server.Models
 
         public void calculate()
         {
-            if (Input?.credits?.Count > 0 && Grades?.Count > 0)
+            if (Input?.credits?.Length > 0 && Grades?.Count > 0)
             {
                 for (int i = 0; i < Input.noOfCourses; i++)
                 {
-                    SumOfCredits += Input.credits.ElementAt(i);
-                    SumOfProductOfCreditsGrades += Input.credits.ElementAt(i) * Grades.ElementAt(i);
+                    SumOfCredits += Input.credits[i];
+                    SumOfProductOfCreditsGrades += Input.credits[i] * Grades.ElementAt(i);
                 }
                 Sgpa = SumOfProductOfCreditsGrades / (float)SumOfCredits;
             }
