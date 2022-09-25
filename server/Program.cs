@@ -1,4 +1,22 @@
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            //   policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+            policy
+                .WithOrigins("https://localhost:3000", "https://cgpacalc.vercel.app")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        }
+    );
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -24,6 +42,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseStaticFiles();
 
 app.UseRouting();
