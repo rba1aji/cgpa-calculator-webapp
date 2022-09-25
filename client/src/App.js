@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import SGPA from './components/SGPA';
 
 function App() {
+  const [type, setType] = useState();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      What to calculate?
+      <Button className='' onClick={() => setType("cgpa")}>CGPA</Button>
+      or
+      <Button onClick={() => setType("sgpa")}>Just SGPA</Button>
+
+      {
+        type == "sgpa" ? <SGPA /> : <></>
+      }
+      {
+        type == "cgpa" ? <div></div> : <></>
+      }
+
     </div>
   );
 }
