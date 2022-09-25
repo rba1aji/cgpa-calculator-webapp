@@ -58,7 +58,7 @@ export default function SGPA() {
 
                     axios({
                         method: 'post',
-                        url: `https://localhost:7213/api/CGPA/1`,
+                        url: `https://rjicgpacalc.herokuapp.com/api/CGPA/1`,
                         data: arrdata,
                         headers: {
                             "Content-Type": "application/json; charset=utf-8 "
@@ -66,7 +66,7 @@ export default function SGPA() {
 
                     })
                         .then((res) => {
-                            console.log(res.data);
+                            console.log(res);
                             setSgpa(res.data.cgpa.toFixed(2));
                             scrollToRef(myRef);
                         })
