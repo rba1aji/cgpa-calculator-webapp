@@ -6,9 +6,9 @@ import axios from 'axios';
 
 const passOrFail = (grade) => {
     var pass = 'OA+B+';
-    var fail='RAIW'
+    var fail = 'RAIW'
     if (pass.includes(grade)) return "Pass"
-    else if(fail.includes(grade))return "Fail";
+    else if (fail.includes(grade)) return "Fail";
     return 'pass/fail'
 }
 
@@ -43,12 +43,12 @@ export default function SGPA() {
             <Form style={{ display: 'inline-block' }}
                 onSubmit={((e) => {
                     let grades = new Array(noOfCourses.length);
-                   
+
                     for (let i = 0; i < selectedGrade.length; i++) {
                         grades[i] = selectedGrade[i] === '' ? 'I' : selectedGrade[i];
                     }
                     e.preventDefault();
-                    console.log(credits,grades, selectedGrade);
+                    console.log(credits, grades, selectedGrade);
 
                     const arrdata = [
                         {
@@ -110,6 +110,9 @@ export default function SGPA() {
                                         className={`text-center ${window.innerWidth > 600 ? 'mx-4' : ''} bg-secondary p-1`}
                                         onChange={
                                             (e) => {
+                                                let t = selectedGrade;
+                                                t[index] = e.target.value;
+                                                setSelectedGrade(t);
                                                 // console.log(e.target.value);
                                                 // console.log('selected')
                                             }}
@@ -121,11 +124,13 @@ export default function SGPA() {
                                             gradesAsAlphabet.map((item, ind) => {
                                                 return <option
                                                     key={ind}
-                                                    onClick={() => {
-                                                        let t = selectedGrade;
-                                                        t[index] = item;
-                                                        setSelectedGrade(t)
-                                                    }}>
+                                                    // onClick={() => {
+                                                    //     let t = selectedGrade;
+                                                    //     t[index] = item;
+                                                    //     setSelectedGrade(t)
+                                                    // // }}
+                                                    value={item}
+                                                >
                                                     {item}
                                                 </option>
                                             })
