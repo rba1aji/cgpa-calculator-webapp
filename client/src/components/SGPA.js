@@ -6,8 +6,10 @@ import axios from 'axios';
 
 const passOrFail = (grade) => {
     var pass = 'OA+B+';
+    var fail='RAIW'
     if (pass.includes(grade)) return "Pass"
-    return "pass/fail";
+    else if(fail.includes(grade))return "Fail";
+    return 'pass/fail'
 }
 
 
