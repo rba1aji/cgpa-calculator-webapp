@@ -41,12 +41,12 @@ export default function SGPA() {
             <Form style={{ display: 'inline-block' }}
                 onSubmit={((e) => {
                     let grades = new Array(noOfCourses.length);
-                    grades.fill('I');
+                   
                     for (let i = 0; i < selectedGrade.length; i++) {
-                        grades[i] = selectedGrade[i] === '' ? grades[i] : selectedGrade[i];
+                        grades[i] = selectedGrade[i] === '' ? 'I' : selectedGrade[i];
                     }
                     e.preventDefault();
-                    console.log(credits, grades);
+                    console.log(credits,grades, selectedGrade);
 
                     const arrdata = [
                         {
